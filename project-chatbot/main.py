@@ -5,10 +5,19 @@ from utils import load_text,chunk_text
 from embeddings import get_embedding
 from retriever import VectorStore
 from llm import ask_llm
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 vector_store = None
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/upload")
 async def upload(file: UploadFile):
@@ -40,3 +49,20 @@ def ask(question: str):
     answer = ask_llm(context,question)
 
     return {"answer": answer }
+@app.post("/upload")
+
+@app.get("/ask")
+def ask(question: str):
+    if vector_store is None:
+        return {"error": "No documents loaded"}
+
+    query_embedding = get_embedding(question)
+    relevant_chunks = vector_store.search(query_embedding)
+
+
+    dim = len(embeddings[0])
+
+    vector_store = VectorStore(dim)
+    vector_store.add(embeddings, all_chunks)
+
+    print("Knowledge base loaded ✅")
