@@ -2,7 +2,7 @@ from fastapi import FastAPI, UploadFile
 import numpy as np
 
 from utils import load_text,chunk_text
-from embeddings import get_embdding
+from embeddings import get_embedding
 from retriever import VectorStore
 from llm import ask_llm
 
@@ -19,9 +19,9 @@ async def upload(file: UploadFile):
 
     chunks = chunk_text(text)
 
-    embeddings = [get_embdding(chunk) for chunk in chunks]
+    embeddings = [get_embedding(chunk) for chunk in chunks]
 
-    dim = len(embeddings)
+    dim = len(embeddings[0])
 
     vector_store = VectorStore(dim)
     vector_store.add(embeddings,chunks)
@@ -33,7 +33,7 @@ def ask(question: str):
 
     if vector_store is None:
         return {"error": "No documents uploaded yet"}
-    query_embedding = get_embdding(question)
+    query_embedding = get_embedding(question)
     relevant_chunks = vector_store.search(query_embedding)
 
     context = "\n".join(relevant_chunks)
