@@ -15,7 +15,7 @@ How to run the project
 
 
 Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/abrilteiga/project-chatbot.git
 cd project-chatbot
 
 
