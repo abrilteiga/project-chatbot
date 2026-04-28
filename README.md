@@ -4,6 +4,9 @@ Overview
 Her First is a chatbot designed to support girls who are experiencing puberty or getting their first period. It provides simple, clear, and friendly answers based on trusted educational content.
 The goal of this project is to create a safe and accessible space where users can ask questions and better understand their bodies.
 
+This is a personal project I created for myself. Driven by curiosity about the world of AI, I wanted to go beyond theory and gain hands-on experience. 
+So, I decided to build a project that would allow me to explore, experiment, and truly immerse myself in this fascinating field.
+
 How it works
 This project uses a Retrieval-Augmented Generation (RAG) approach.
 A collection of educational documents related to puberty, menstruation, and hygiene is preloaded into the system. These documents are split into smaller chunks and converted into embeddings.
