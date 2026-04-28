@@ -163,10 +163,22 @@ async function ask() {
 
     chat.innerHTML += `<div class="message user">${question}</div>`;
 
-    const response = await fetch(`http://127.0.0.1:8000/ask?question=${encodeURIComponent(question)}`);
-    const data = await response.json();
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/ask?question=${encodeURIComponent(question)}`);
+        const data = await response.json();
 
-    chat.innerHTML += `<div class="message bot">${data.answer}</div>`;
+        console.log("API RESPONSE:", data);
+
+        if (data.answer) {
+            chat.innerHTML += `<div class="message bot">${data.answer}</div>`;
+        } else {
+            chat.innerHTML += `<div class="message bot">⚠️ No answer received</div>`;
+        }
+
+    } catch (error) {
+        console.error("ERROR:", error);
+        chat.innerHTML += `<div class="message bot">⚠️ Error connecting to server</div>`;
+    }
 
     input.value = "";
     chat.scrollTop = chat.scrollHeight;
