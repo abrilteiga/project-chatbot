@@ -53,10 +53,11 @@
             color: #444;
         }
 
-        .chat {
+       .chat {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
+            padding-bottom: 80px; /* space for input */
         }
 
         .message {
@@ -78,6 +79,10 @@
 
         /* Input */
         .input-area {
+            position: fixed;
+            bottom: 0;
+            left: 260px; 
+            right: 0;
             display: flex;
             padding: 15px;
             background: white;
@@ -116,29 +121,76 @@
 <div class="sidebar">
     <div class="logo">Her First 🌸</div>
 
-    <div class="menu">
-        <button>💬 Chat</button>
-        <button>📚 Learn</button>
-        <button>💖 Self Care</button>
-    </div>
+   <div class="menu">
+    <button onclick="showTab('chat')">💬 Chat</button>
+    <button onclick="showTab('learn')">📚 Learn</button>
+    <button onclick="showTab('selfCare')">💖 Self Care</button>
+</div>
 
 </div>
 
 <div class="main">
-    <div class="header">
-        Hi there 💕 You can ask anything about your body or your period
+
+    <!-- CHAT TAB -->
+    <div id="chatTab" class="tab">
+        <div class="header">
+            Hi there 💕 You can ask anything about your body or your period
+        </div>
+
+        <div id="chat" class="chat"></div>
+
+        <div class="input-area">
+            <input id="question" placeholder="Ask anything..." />
+            <button class="send" onclick="ask()">➤</button>
+        </div>
     </div>
 
-    <div id="chat" class="chat"></div>
+    <!-- LEARN TAB -->
+    <div id="learnTab" class="tab" style="display:none;">
+        <div class="chat">
+            <h3>📚 Learn</h3>
 
-    <div class="input-area">
-        <input id="question" placeholder="Ask anything..." />
-        <button class="send" onclick="ask()">➤</button>
+            <p><b>What is a period?</b><br>
+            A period is when your body sheds blood from the uterus. It usually happens once a month.</p>
+
+            <p><b>What is puberty?</b><br>
+            Puberty is when your body starts to grow and change into an adult body.</p>
+
+            <p><b>Is it normal to feel cramps?</b><br>
+            Yes! Mild cramps are common. Rest, warmth, and hydration can help.</p>
+        </div>
     </div>
+
+    <!-- SELF CARE TAB -->
+    <div id="selfCareTab" class="tab" style="display:none;">
+        <div class="chat">
+            <h3>💖 Self Care</h3>
+
+            <p>🛁 Take a warm shower or bath</p>
+            <p>🍫 Eat something you enjoy</p>
+            <p>🧘 Try gentle stretching</p>
+            <p>🛌 Rest if you feel tired</p>
+            <p>💬 Talk to someone you trust</p>
+        </div>
+    </div>
+
 </div>
 
 <script>
 
+function showTab(tab) {
+    document.getElementById("chatTab").style.display = "none";
+    document.getElementById("learnTab").style.display = "none";
+    document.getElementById("selfCareTab").style.display = "none";
+
+    if (tab === "chat") {
+        document.getElementById("chatTab").style.display = "block";
+    } else if (tab === "learn") {
+        document.getElementById("learnTab").style.display = "block";
+    } else if (tab === "selfCare") {
+        document.getElementById("selfCareTab").style.display = "block";
+    }
+}
 
 async function ask() {
     const input = document.getElementById("question");
